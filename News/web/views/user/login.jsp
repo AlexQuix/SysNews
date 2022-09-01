@@ -2,32 +2,45 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+    <meta charset="UTF-8">
+    <title>Home</title>
+        
+    <link href="/news/wwwroot/styles/menu.css" rel="stylesheet" type="text/css"/>
+    <link href="/news/wwwroot/styles/login.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <main class="container">   
-            <h1>Login</h1>
-            <form action="/news/user?action=login" method="POST">
-                <input type="hidden" name="action" value="<%=request.getAttribute("action")%>">                
-                <div class="row">
-                    <div class="input-field col l5 s12">   
-                        <label for="txtEmail">Correo Electrónico</label>
-                        <input  id="txtEmail" type="text" name="Email" required class="validate" maxlength="25">  
-                    </div>                                       
-                </div>
-                <div class="row">
-                    <div class="input-field col l5 s12">                                             
-                        <label for="txtPassword">Password</label> 
-                        <input  id="txtPassword" type="password" name="Password" required class="validate" minlength="5" maxlength="32">                         
-                    </div>                                       
-                </div>
-                <div class="row">
-                    <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right"></i>Login</button>                                               
+        
+        <div class="hola">
+        <form action="/news/user?action=login" method="POST">
+            <input type="hidden" name="action" value="<%=request.getAttribute("action")%>">  
+            <div class="form">
+                <div class="grupo">
+                    <div class="login-box">
+                        <img class="avatar" src="Img/depositphotos_355964924-stock-illustration-default-avatar-profile-icon-vector.jpg" alt="" lang="30%">
                     </div>
                 </div>
-            </form>          
-        </main>
+                <div class="grupo">
+                    <label type="submit">Login</label>
+                </div>
+                <br>
+                <br>
+                <div class="grupo">
+                    <input id="txtEmail" type="text" name="Email" required class="validate"><span class="barra"></span>
+                    <label for="txtPassword">Email</label>
+                </div>
+                <div class="grupo">
+                    <input id="txtPassword" type="password" name="Password" required class="validate"><span class="barra"></span>
+                    <label for="txtPassword">Password</label>
+                    <br>
+                    <section class="px-5 d-flex justify-content-between align-items-center">
+                        <a href="formulario.html" aria-haspopup=""> create new count</a>
+                    </section>
+                </div>
+                <br>
+                <br>
+                <button type="submit">Confirmar</button>
+            </div>
+        </form>
+    </div>
     </body>
 </html>

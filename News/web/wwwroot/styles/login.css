@@ -1,0 +1,160 @@
+body {
+    background: url(https://th.bing.com/th/id/R.288e60cce20154e9f4771c36d2fe8cc5?rik=F78YHr8p1DSkvg&riu=http%3a%2f%2fwww.insetan.com.br%2fInsetan%2fimages%2fbackgrounds%2fbglogin.png&ehk=9g6gyqiNxdrYG7q56ZGwGvTDUDCqk2hhAaHECOpMPD0%3d&risl=&pid=ImgRaw&r=0);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+:root {
+    --colorTextos: #49454567;
+    --redondear: 10px;
+}
+
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hola {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    height: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    margin: 5px 0;
+    font-weight: 800;
+}
+
+form {
+    background: rgb(207, 199, 199);
+    width: 30%;
+    padding: 20px 0;
+    border-radius: var(--redondear);
+    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.8);
+}
+
+.form {
+    width: 100%;
+    margin: auto;
+}
+
+form .grupo {
+    position: relative;
+    margin: 45px;
+}
+
+input,
+textarea {
+    background: none;
+    color: #c6c6c6;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--colorTextos);
+    resize: none;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    color: rgb(94, 93, 93);
+}
+
+input:focus~label,
+input:valid~label,
+textarea:focus~label,
+textarea:valid~label {
+    position: absolute;
+    top: -14px;
+    font-size: 12px;
+    color: #2196F3;
+}
+
+label {
+    color: var(--colorTextos);
+    font-size: 16px;
+    position: absolute;
+    left: 3px;
+    top: 10px;
+    transition: 0.5s ease all;
+    pointer-events: none;
+}
+
+input:focus~.barra::before,
+textarea:focus~.barra::before {
+    width: 100%;
+}
+
+.barra {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.barra::before {
+    content: '';
+    height: 2px;
+    width: 0%;
+    bottom: 0;
+    position: absolute;
+    background: linear-gradient(to right, #3a3a3f, #df1039);
+    transition: 0.3s ease all;
+    left: 0%;
+}
+
+button {
+    background: #dabfc5;
+    background: -webkit-linear-gradient(to right, #67686d, #f1e9ea);
+    background: linear-gradient(to right, #ece4e9, #201f24);
+    display: block;
+    width: 100px;
+    height: 45px;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 14px;
+    margin: 8px auto;
+    cursor: pointer;
+}
+
+@media screen and (max-width:1100px) {
+    form {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    form {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width:450px) {
+    form {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:300px) {
+    form {
+        width: 80%;
+    }
+}
+
+.login-box .avatar {
+    width: 125px;
+    height: 125px;
+    border-radius: 60%;
+    position: absolute;
+    top: -125px;
+    left: calc(73% - 130px);
+}

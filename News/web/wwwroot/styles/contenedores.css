@@ -1,0 +1,44 @@
+body {
+    background: url(https://th.bing.com/th/id/R.288e60cce20154e9f4771c36d2fe8cc5?rik=F78YHr8p1DSkvg&riu=http%3a%2f%2fwww.insetan.com.br%2fInsetan%2fimages%2fbackgrounds%2fbglogin.png&ehk=9g6gyqiNxdrYG7q56ZGwGvTDUDCqk2hhAaHECOpMPD0%3d&risl=&pid=ImgRaw&r=0);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+ul {
+    padding: 10px 300px;
+}
+
+ul>li {
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    border: 2px solid #fff;
+}
+
+ul li .text {
+    color: rgb(53, 49, 49);
+}
+
+ul li .text h2 {
+    margin-bottom: 15px;
+}
+
+ul li .wrapper-img {
+    min-width: 150px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+ul li .wrapper-img img {
+    width: 95%;
+    height: 100%;
+    object-fit: cover;
+}
+
+ul li {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3%);
+}
