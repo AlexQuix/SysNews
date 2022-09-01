@@ -1,10 +1,7 @@
-<%-- 
-    Document   : index
-    Created on : 31 ago. 2022, 18:15:18
-    Author     : WernerMolina
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +9,22 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>News</h1>
+        <a href="/news/views/news/create.jsp">Crear</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TITULO</th>
+                    <th>CATEGORIA</th>
+                    <th>DESCRIPCION</th>
+                    <th>FECHA</th>
+                    <th>IMAGEN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% out.print(request.getAttribute("news")); %>
+            </tbody>
+        </table>
     </body>
 </html>
