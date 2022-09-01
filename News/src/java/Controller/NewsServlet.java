@@ -1,19 +1,27 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Controller;
 
 import BL.NewsBL;
 import java.io.IOException;
 import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import static java.lang.Integer.parseInt;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import news.el.News;
 
-@WebServlet(name = "NewsServlet", urlPatterns = {"/news"})
+/**
+ *
+ * @author alexq
+ */
+@WebServlet(name = "NewsServl", urlPatterns = {"/noticia"})
 public class NewsServlet extends HttpServlet {
-
+    
     private void GetIndex(HttpServletRequest req, HttpServletResponse res) throws IOException {
         try {
             String content = NewsBL.getAll();

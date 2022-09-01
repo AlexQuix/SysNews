@@ -10,7 +10,7 @@
     </head>
     <body>
         <h1>Delete!</h1>
-        <form action="/news/news?action=delete" method="POST">
+        <form action="/news/noticia?action=delete" method="POST">
             <input name="IdNews" value="<%= news.getIdNews() %>" hidden="true"/>
             <label>TITULO</label>
             <input name="Tittle" type="text" value="<%= news.getTittle() %>"/>

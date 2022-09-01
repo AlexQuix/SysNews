@@ -9,7 +9,7 @@
     <body>
         <main class="container">   
             <h5>Crear Noticia</h5>
-            <form action="/news/news?action=create" method="POST">
+            <form action="/news/noticia?action=create" method="POST">
                 <input type="hidden" name="action" value="<%=request.getAttribute("action")%>">                
                 <div class="row">
                     <div class="input-field col l4 s12">

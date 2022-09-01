@@ -1,4 +1,5 @@
 
+<%@page import="news.el.News"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="news.el.User"%>
 <% News news = (News) request.getAttribute("news");%>
@@ -11,7 +12,7 @@
     <body>
         <<main class="container">   
             <h5>Crear Noticia</h5>
-            <form action="/news/news?action=update" method="POST" onsubmit="return  ValidateForm()">
+            <form action="/news/noticia?action=update" method="POST" onsubmit="return  ValidateForm()">
                 <input type="hidden" name="action" value="<%=request.getAttribute("action")%>"> 
                 <input type="hidden" name="id" value="<%=news.getIdNews()%>">                
                 <div class="row">

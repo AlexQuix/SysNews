@@ -3,7 +3,7 @@ package BL;
 
 import static BL.UserBL.encriptarMD5;
 import Utils.Views.NewsView;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import news.dal.NewsDAL;
 import news.dal.UserDAL;

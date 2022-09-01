@@ -55,7 +55,7 @@ public class UserServlet extends HttpServlet {
         try{
             UserBL.deleteAccount(req);
             UserSession.signOff(req);
-            res.sendRedirect("/news/home");
+            res.sendRedirect("/news/noticia");
         }catch(Exception e){
             res.getWriter().println(e);
         }
@@ -84,7 +84,7 @@ public class UserServlet extends HttpServlet {
         try{
             User user = UserBL.login(req);
             UserSession.authenticate(req, user);
-            res.sendRedirect("/news/home");
+            res.sendRedirect("/news/noticia");
         }catch(Exception e){
             res.getWriter().print(e);
 //            req.getRequestDispatcher("/views/user/login.jsp").forward(req, res);
@@ -125,7 +125,7 @@ public class UserServlet extends HttpServlet {
                 PostUpdate(req, res);
                 break;
             default:
-                res.sendRedirect("/news/home");
+                res.sendRedirect("/news/noticia");
                 break;
         }
     }
