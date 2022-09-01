@@ -8,7 +8,7 @@ import news.el.User;
 import news.dal.CommonDb;
 
 public class UserDAL {
-    public static int createAccount(User user) throws Exception {
+    public static int create(User user) throws Exception {
         int result = -616;
         String sql;
         
@@ -35,10 +35,12 @@ public class UserDAL {
       
         return result; 
     }
-    public static ArrayList<User> getAll() throws SQLException{
+    
+//    Metodos de busqueda
+    public static ArrayList<User> find() throws SQLException{
         ArrayList<User> users = new ArrayList<User>();
         try (Connection conn = CommonDb.getConnection();) { 
-            String sql = "SELECT u.IdUser, u.IdRole, u.Name, u.LastName, u.Email, u.RegistreDate, u.ProfilePhoto FROM [User] AS u";
+            String sql = "SELECT u.IdUser, u.IdRole, u.Name, u.LastName, u.Email, u.RegistreDate, u.ProfilePhoto, u.Password FROM [User] AS u";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet data = ps.executeQuery();
             while (data.next()) {
@@ -51,6 +53,7 @@ public class UserDAL {
                 user.setEmail(data.getString(5));
                 user.setRegistreDate(data.getDate(6).toLocalDate());
                 user.setProfilePhoto(data.getString(7));
+                user.setPassword(data.getString(8));
                 
                 users.add(user);
             }
@@ -64,7 +67,52 @@ public class UserDAL {
         
         return users;
     }
-    public static User findWith(String email, String pass){
-        return new User();
+    public static User findWith(String email, String pass) throws Exception {
+        User user = new User();
+        try (Connection conn = CommonDb.getConnection();) { 
+            String sql = "SELECT u.Name, u.LastName FROM [User] AS u WHERE u.Email=? AND u.[Password]=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, pass);
+            
+            ResultSet data = ps.executeQuery();
+            if(data.next()){
+                user.setName(data.getString(1));
+                user.setLastName(data.getString(2));
+            }
+
+            ps.close(); 
+            conn.close();
+            return user;
+        } 
+        catch (SQLException ex) {
+            throw ex; 
+        }
+        
+    }
+    
+    public static int update(User user) throws Exception {
+        int result = -616;
+        String sql;        
+            try (Connection conn = CommonDb.getConnection();) {
+                sql = "UPDATE [User] SET IdRole=?, Name=?, LastName=?, Email=?, [Password]=?, ProfilePhoto=?, IsAdmin=? WHERE IdUser=?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                
+                ps.setInt(1, user.getIdRole()); 
+                ps.setString(2, user.getName()); 
+                ps.setString(3, user.getLastName()); 
+                ps.setString(4, user.getEmail()); 
+                ps.setString(5, user.getPassword()); 
+                ps.setString(6, user.getProfilePhoto());
+                ps.setByte(7, user.getIsAdmin());
+                
+                result = ps.executeUpdate(); 
+                ps.close();
+                conn.close(); 
+                return result; 
+            } 
+            catch (SQLException ex) {
+                throw ex; 
+            }
     }
 }

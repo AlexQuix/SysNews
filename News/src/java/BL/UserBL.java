@@ -3,7 +3,7 @@ package BL;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import news.dal.UserDAL;
 import news.el.User;
 
@@ -24,6 +24,7 @@ public class UserBL {
             throw ex;
         }
     }
+    
     public static int createAccount(HttpServletRequest req){
         try{
             User user = new User();
@@ -35,17 +36,29 @@ public class UserBL {
             user.setProfilePhoto(req.getParameter("ProfilePhoto"));
             user.setIsAdmin((byte) 0);
             
-            int result = UserDAL.createAccount(user);
+            int result = UserDAL.create(user);
             return result;
         }catch(Exception e){
             return -1;
         }
     }
-    public static ArrayList<User> getAll() throws Exception{
+    public static ArrayList<User> getAllUsers() throws Exception{
         try{            
-            return UserDAL.getAll();
+            return UserDAL.find();
         }catch(Exception e){
             throw e;
         }
+    }
+    public static User login(HttpServletRequest req) throws Exception{
+        try{
+            String email = req.getParameter("Email");
+            String pass = req.getParameter("Password");
+            return UserDAL.findWith(email, pass);
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    public static int updateAccount(HttpServletRequest req){
+        return 1;
     }
 }

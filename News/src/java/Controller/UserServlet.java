@@ -7,29 +7,25 @@ package Controller;
 import BL.UserBL;
 import Utils.Json.GsonCustom;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import news.dal.UserDAL;
 import news.el.User;
 
-/**
- *
- * @author alexq
- */
+
 @WebServlet(name = "User", urlPatterns = {"/user"})
 public class UserServlet extends HttpServlet {
     private void GetAllUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         try{
-            ArrayList<User> users = UserBL.getAll();
+            ArrayList<User> users = UserBL.getAllUsers();
             String data = GsonCustom.get().toJson(users);
-            res.setContentType("applicatino/json");
             res.getWriter().print(data);
         }catch(Exception e){
             res.getWriter().print(e);
@@ -46,13 +42,25 @@ public class UserServlet extends HttpServlet {
             res.getWriter().println(e);
         }
     }
+    private void GetUpdate(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        
+        req.getRequestDispatcher("views/user/update.jsp").forward(req, res);
+    }
+    private void PostUpdate(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+        try{
+            User user = UserBL.login(req);
+            res.getWriter().println(user.getName());
+        }catch(Exception e){
+            res.getWriter().println(e);
+        }
+    }
     private void GetLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         req.getRequestDispatcher("views/user/login.jsp").forward(req, res);
     }
     private void PostLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         try{
-            
-//            res.getWriter().println(result);
+            User user = UserBL.login(req);
+            res.getWriter().println(user.getName());
         }catch(Exception e){
             res.getWriter().println(e);
         }
@@ -61,15 +69,49 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-//        GetCreate(req, res);
-//        GetLogin(req, res);
-        GetAllUser(req, res);
+        String typeView = req.getParameter("view") + "";
+        switch(typeView){
+            case "create":
+                GetCreate(req, res);
+                break;
+            case "login":
+                GetLogin(req, res);
+                break;
+            case "delete":
+//                GetDelete(req, res);
+                break;
+            case "details":
+//                GetDetails(req, res);
+                break;
+            case "update":
+                GetUpdate(req, res);
+                break;
+            default:
+                GetAllUser(req, res);
+                break;
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        PostCreate(req, res);
+        String typeAction = req.getParameter("action") + "";
+        switch(typeAction){
+            case "login":
+                PostLogin(req, res);
+                break;
+            case "create":
+                PostCreate(req, res);
+                break;
+            case "delete":
+//                PostDelete(req, res);
+                break;
+            case "update":
+                PostUpdate(req, res);
+            default:
+                res.sendRedirect("views/role/index.jsp");
+                break;
+        }
     }
 
     @Override

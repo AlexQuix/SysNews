@@ -6,11 +6,11 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -22,19 +22,12 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-//      req.getRequestDispatcher("user").forward(req, res);
-//      res.sendRedirect("Index.jsp");
         res.sendRedirect("index.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-//        String name = req.getParameter("username");
-//        String pass = req.getParameter("password");
-//     
-//        PrintWriter out = res.getWriter();
-//        out.println(name + " - " + pass);
     }
 
     @Override
