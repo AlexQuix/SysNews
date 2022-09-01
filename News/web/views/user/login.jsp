@@ -16,7 +16,7 @@
             <div class="form">
                 <div class="grupo">
                     <div class="login-box">
-                        <img class="avatar" src="Img/depositphotos_355964924-stock-illustration-default-avatar-profile-icon-vector.jpg" alt="" lang="30%">
+                    <img class="avatar" src="/news/wwwroot/Img/depositphotos_355964924-stock-illustration-default-avatar-profile-icon-vector.jpg" alt=""/>
                     </div>
                 </div>
                 <div class="grupo">
@@ -33,20 +33,14 @@
                     <label for="txtPassword">Password</label>
                     <br>
                     <section class="px-5 d-flex justify-content-between align-items-center">
-                        <a href="formulario.html" aria-haspopup=""> create new count</a>
+                        <a href="/news/user?view=create">No tengo una cuenta</a>
                     </section>
                 </div>
-<<<<<<< Updated upstream
                 <br>
                 <br>
                 <button type="submit">Confirmar</button>
             </div>
         </form>
     </div>
-=======
-            </form>  
-            <a href="/news/user?view=create">No tengo una cuenta</a>
-        </main>
->>>>>>> Stashed changes
     </body>
 </html>

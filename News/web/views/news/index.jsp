@@ -22,7 +22,7 @@
         </form>
     </section>
     <section class="px-5 d-flex justify-content-between align-items-center">
-        <img class="avatar" src="img/logo.png">
+        <img class="avatar" src="/news/wwwroot/Img/logo.png" alt=""/>
     </section>
     <header class="header">
         <div class="container">
@@ -41,7 +41,7 @@
             <nav class="menu">
 
                 <a href="Noticia.html">Noticias</a>
-                <a href="User.html"> User </a>
+                <a href="views/news/update.jsp"> User </a>
             </nav>
         </div>
     </header>
@@ -51,11 +51,11 @@
     <div class="container-menu">
         <div class="cont-menu">
             <nav>
-                <a href="Noticia.html">New News</a>
-                <a href="latest news.html">News of the moment </a>
+                <a href="views/news/create.jsp">New News</a>
+                <a href="views/news/index.jsp">News of the moment </a>
 
                 <a href="#">Add News</a>
-                <a href="#">Configuration</a>
+                <a href="views/user/update.jsp">Configuration</a>
             </nav>
             <label for="btn-menu">X </label>
         </div>
