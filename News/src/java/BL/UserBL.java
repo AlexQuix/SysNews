@@ -1,9 +1,11 @@
 package BL;
 
+import Utils.UserSession;
 import static java.lang.Integer.parseInt;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import news.dal.UserDAL;
 import news.el.User;
 
@@ -58,7 +60,35 @@ public class UserBL {
             throw e;
         }
     }
-    public static int updateAccount(HttpServletRequest req){
-        return 1;
+    public static User findBySession(HttpServletRequest req) throws Exception{
+        try{
+            User user = UserSession.getUser(req);
+            return UserDAL.findWith(user.getEmail());
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    public static int updateInfo(HttpServletRequest req) throws Exception{
+        try{
+            User user = new User();
+            user.setIdUser(parseInt(req.getParameter("IdUser")));
+            user.setName(req.getParameter("Name"));
+            user.setLastName(req.getParameter("LastName"));
+            user.setEmail(req.getParameter("Email"));
+            user.setProfilePhoto(req.getParameter("ProfilePhoto"));
+            return UserDAL.update(user);
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    public static int deleteAccount(HttpServletRequest req) throws SQLException{
+        try{
+            User user = new User();
+            user.setIdUser(parseInt(req.getParameter("IdUser")));
+            user.setEmail(req.getParameter("Email"));
+            return UserDAL.delete(user);
+        }catch(SQLException e){
+            throw e;
+        }
     }
 }

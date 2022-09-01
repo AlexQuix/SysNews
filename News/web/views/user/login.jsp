@@ -36,11 +36,17 @@
                         <a href="formulario.html" aria-haspopup=""> create new count</a>
                     </section>
                 </div>
+<<<<<<< Updated upstream
                 <br>
                 <br>
                 <button type="submit">Confirmar</button>
             </div>
         </form>
     </div>
+=======
+            </form>  
+            <a href="/news/user?view=create">No tengo una cuenta</a>
+        </main>
+>>>>>>> Stashed changes
     </body>
 </html>

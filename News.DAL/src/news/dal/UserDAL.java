@@ -13,7 +13,7 @@ public class UserDAL {
         String sql;
         
             try (Connection con = CommonDb.getConnection();) {
-                sql = "INSERT INTO [User](IdRole, Name, LastName, Email, Password, RegistreDate, ProfilePhoto, IsAdmin, IdUser) VALUES(?,?,?,?,?,?,?,?)";
+                sql = "INSERT INTO [User](IdRole, Name, LastName, Email, Password, RegistreDate, ProfilePhoto, IsAdmin) VALUES(?,?,?,?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
                 
                 ps.setInt(1, 1); 
@@ -79,6 +79,7 @@ public class UserDAL {
             if(data.next()){
                 user.setName(data.getString(1));
                 user.setLastName(data.getString(2));
+                user.setEmail(email);
             }
 
             ps.close(); 
@@ -88,23 +89,45 @@ public class UserDAL {
         catch (SQLException ex) {
             throw ex; 
         }
-        
+    }
+    public static User findWith(String email) throws SQLException{
+        User user = new User();
+        try (Connection conn = CommonDb.getConnection();) { 
+            String sql = "SELECT u.IdUser, u.IdRole, u.Name, u.LastName, u.Email, u.RegistreDate, u.ProfilePhoto FROM [User] AS u WHERE u.Email=? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            
+            ResultSet data = ps.executeQuery();
+            if(data.next()){
+                user.setIdUser(data.getInt(1));
+                user.setIdRole(data.getInt(2)); 
+                user.setName(data.getString(3)); 
+                user.setLastName(data.getString(4));
+                user.setEmail(data.getString(5));
+                user.setRegistreDate(data.getDate(6).toLocalDate());
+                user.setProfilePhoto(data.getString(7));
+            }
+
+            ps.close(); 
+            conn.close();
+            return user;
+        } catch (SQLException ex) {
+            throw ex; 
+        }
     }
     
     public static int update(User user) throws Exception {
         int result = -616;
         String sql;        
             try (Connection conn = CommonDb.getConnection();) {
-                sql = "UPDATE [User] SET IdRole=?, Name=?, LastName=?, Email=?, [Password]=?, ProfilePhoto=?, IsAdmin=? WHERE IdUser=?";
+                sql = "UPDATE [User] SET Name=?, LastName=?, Email=?, ProfilePhoto=? WHERE IdUser=?";
                 PreparedStatement ps = conn.prepareStatement(sql);
-                
-                ps.setInt(1, user.getIdRole()); 
-                ps.setString(2, user.getName()); 
-                ps.setString(3, user.getLastName()); 
-                ps.setString(4, user.getEmail()); 
-                ps.setString(5, user.getPassword()); 
-                ps.setString(6, user.getProfilePhoto());
-                ps.setByte(7, user.getIsAdmin());
+
+                ps.setString(1, user.getName()); 
+                ps.setString(2, user.getLastName()); 
+                ps.setString(3, user.getEmail()); 
+                ps.setString(4, user.getProfilePhoto());
+                ps.setInt(5, user.getIdUser());
                 
                 result = ps.executeUpdate(); 
                 ps.close();
@@ -114,5 +137,22 @@ public class UserDAL {
             catch (SQLException ex) {
                 throw ex; 
             }
+    }
+    
+    public static int delete(User user) throws SQLException{
+        int result;
+        try (Connection conn = CommonDb.getConnection();) { 
+            String sql = "DELETE FROM [User] WHERE IdUser=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, user.getIdUser());
+            result = ps.executeUpdate(); 
+
+            ps.close();
+            conn.close();
+            return result;
+        }
+        catch (SQLException ex) {
+            throw ex;
+        }
     }
 }

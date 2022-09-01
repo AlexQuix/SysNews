@@ -7,11 +7,11 @@ package Controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import news.dal.RoleDAL;
 import news.el.Role;
@@ -20,8 +20,9 @@ import com.google.gson.Gson;
 import Utils.Json.GsonCustom;
 import java.util.List;
 import BL.RoleBL;
+import Utils.UserSession;
 import static java.lang.Integer.parseInt;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet(name = "RoleServlet", urlPatterns = {"/role"})
@@ -126,10 +127,7 @@ public class RoleServlet extends HttpServlet {
         }
     }
     
-    
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    private void RequestGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String typeView = req.getParameter("view") + "";
         switch(typeView){
             case "create":
@@ -149,10 +147,7 @@ public class RoleServlet extends HttpServlet {
                 break;
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    private void RequestPost(HttpServletRequest req, HttpServletResponse res) throws IOException{
         String typeAction = req.getParameter("action") + "";
         switch(typeAction){
             case "create":
@@ -166,6 +161,22 @@ public class RoleServlet extends HttpServlet {
             default:
                 res.sendRedirect("views/role/index.jsp");
                 break;
+        }
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        if(!UserSession.isAuth(req)){
+            req.getRequestDispatcher(UserSession.urlLogin).forward(req, res);
+        }else{
+            RequestGet(req, res);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        if(UserSession.isAuth(req)){
+            RequestPost(req, res);
         }
     }
 

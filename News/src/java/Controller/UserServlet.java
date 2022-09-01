@@ -6,17 +6,17 @@ package Controller;
 
 import BL.UserBL;
 import Utils.Json.GsonCustom;
+import Utils.UserSession;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
-import java.util.List;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import news.dal.UserDAL;
 import news.el.User;
 
 
@@ -42,14 +42,37 @@ public class UserServlet extends HttpServlet {
             res.getWriter().println(e);
         }
     }
+    private void GetDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        try{
+            User user = UserBL.findBySession(req);
+            req.setAttribute("data", user);
+            req.getRequestDispatcher("views/user/delete.jsp").forward(req, res);
+        }catch(Exception e){
+            res.getWriter().println(e);
+        }
+    }
+    private void PostDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+        try{
+            UserBL.deleteAccount(req);
+            UserSession.signOff(req);
+            res.sendRedirect("/news/home");
+        }catch(Exception e){
+            res.getWriter().println(e);
+        }
+    }
     private void GetUpdate(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        
-        req.getRequestDispatcher("views/user/update.jsp").forward(req, res);
+        try{
+            User user = UserBL.findBySession(req);
+            req.setAttribute("data", user);
+            req.getRequestDispatcher("views/user/update.jsp").forward(req, res);
+        }catch(Exception e){
+            res.getWriter().println(e);
+        }
     }
     private void PostUpdate(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         try{
-            User user = UserBL.login(req);
-            res.getWriter().println(user.getName());
+            UserBL.updateInfo(req);
+            res.sendRedirect("/news/user");
         }catch(Exception e){
             res.getWriter().println(e);
         }
@@ -60,25 +83,23 @@ public class UserServlet extends HttpServlet {
     private void PostLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         try{
             User user = UserBL.login(req);
-            res.getWriter().println(user.getName());
+            UserSession.authenticate(req, user);
+            res.sendRedirect("/news/home");
         }catch(Exception e){
-            res.getWriter().println(e);
+            res.getWriter().print(e);
+//            req.getRequestDispatcher("/views/user/login.jsp").forward(req, res);
         }
     }
+    private void GetSession(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.getWriter().print(req.getSession().getAttribute("email"));
+    }
     
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    
+    private void RequestGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String typeView = req.getParameter("view") + "";
         switch(typeView){
-            case "create":
-                GetCreate(req, res);
-                break;
-            case "login":
-                GetLogin(req, res);
-                break;
             case "delete":
-//                GetDelete(req, res);
+                GetDelete(req, res);
                 break;
             case "details":
 //                GetDetails(req, res);
@@ -86,34 +107,61 @@ public class UserServlet extends HttpServlet {
             case "update":
                 GetUpdate(req, res);
                 break;
+            case "check":
+                GetSession(req, res);
+                break;
             default:
                 GetAllUser(req, res);
                 break;
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    private void RequestPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String typeAction = req.getParameter("action") + "";
         switch(typeAction){
-            case "login":
-                PostLogin(req, res);
-                break;
-            case "create":
-                PostCreate(req, res);
-                break;
             case "delete":
-//                PostDelete(req, res);
+                PostDelete(req, res);
                 break;
             case "update":
                 PostUpdate(req, res);
+                break;
             default:
-                res.sendRedirect("views/role/index.jsp");
+                res.sendRedirect("/news/home");
                 break;
         }
     }
-
+    
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        String typeView = req.getParameter("view") + "";
+        if(typeView.equals("create")){
+            GetCreate(req, res);
+            return;
+        }
+        if(typeView.equals("login")){
+            GetLogin(req, res);
+            return;
+        }
+        if(!UserSession.isAuth(req)){
+            req.getRequestDispatcher(UserSession.urlLogin).forward(req, res);
+        }else{
+            RequestGet(req, res);
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        String typeView = req.getParameter("action") + "";
+        if(typeView.equals("create")){
+            PostCreate(req, res);
+            return;
+        }
+        if(typeView.equals("login")){
+            PostLogin(req, res);
+            return;
+        }
+        if(UserSession.isAuth(req)){
+            RequestPost(req, res);
+        }
+    }
     @Override
     public String getServletInfo() {
         return "Short description";

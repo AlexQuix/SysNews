@@ -19,6 +19,7 @@
                         <img class="avatar" src="img/depositphotos_355964924-stock-illustration-default-avatar-profile-icon-vector.jpg" alt="" lang="30%">
                     </div>
                 </div>
+<<<<<<< Updated upstream
                 <div class="grupo">
                     <input id="txtName" type="text" name="Name" required class="validate"><span class="barra"></span>
                     <label for="txtName">Name</label>
@@ -48,4 +49,10 @@
         </form>
     </div>
 </body>
+=======
+            </form>     
+            <a href="/news/user?view=login">Ya tengo una cuenta</a>
+        </main>
+    </body>
+>>>>>>> Stashed changes
 </html>
